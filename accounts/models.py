@@ -5,7 +5,11 @@ from django.conf import settings
 
 class User(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/')
-    address = models.CharField(max_length=255)
+    address_line1 = models.CharField(max_length=255, default=None)
+    city = models.CharField(max_length=100, default=None)
+    state = models.CharField(max_length=100, default=None)
+    pincode = models.CharField(max_length=10, default=None)
+    user_type = models.CharField(max_length=1, choices=(('P', 'Patient'), ('D', 'Doctor')), default=None)
 
     class Meta:
         db_table = 'custom_user'
@@ -18,7 +22,6 @@ User._meta.get_field('user_permissions').related_name = 'custom_user_permissions
 
 class Patient(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
 
 class Doctor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
