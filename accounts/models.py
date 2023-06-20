@@ -5,11 +5,11 @@ from django.conf import settings
 
 class User(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/')
-    address_line1 = models.CharField(max_length=255, default=None)
-    city = models.CharField(max_length=100, default=None)
-    state = models.CharField(max_length=100, default=None)
-    pincode = models.CharField(max_length=10, default=None)
-    user_type = models.CharField(max_length=1, choices=(('P', 'Patient'), ('D', 'Doctor')), default=None)
+    address_line1 = models.CharField(max_length=255, default=None, null=True)
+    city = models.CharField(max_length=100, default=None, null=True)
+    state = models.CharField(max_length=100, default=None, null=True)
+    pincode = models.CharField(max_length=10, default=None, null=True)
+    user_type = models.CharField(max_length=1, choices=(('P', 'Patient'), ('D', 'Doctor')))
 
     class Meta:
         db_table = 'custom_user'
