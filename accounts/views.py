@@ -4,7 +4,7 @@ from .forms import SignUpForm, LoginForm
 from .models import Patient, Doctor
 from django.http import HttpResponse
 from django.contrib import messages
-
+from django.contrib.auth.models import User
 
 
 def patient_dashboard(request):
@@ -48,6 +48,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -56,19 +57,23 @@ def login_view(request):
             password = form.cleaned_data['password']
             user_type = form.cleaned_data['user_type']
 
+            # Authenticate user based on username and password
             user = authenticate(username=username, password=password)
 
             if user is not None:
-                if user_type == 'patient':
+                # Check if the authenticated user is of the correct user type
+                if user_type == 'patient' and hasattr(user, 'patient'):
                     # Logic for patient login
                     login(request, user)
                     return redirect('accounts:patient_dashboard')
-                elif user_type == 'doctor':
+                elif user_type == 'doctor' and hasattr(user, 'doctor'):
                     # Logic for doctor login
                     login(request, user)
                     return redirect('accounts:doctor_dashboard')
+
     else:
         form = LoginForm()
 
     return render(request, 'accounts/login.html', {'form': form})
+
 
