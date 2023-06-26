@@ -1,0 +1,7 @@
+{% for doctor in doctors %}
+  <div>
+    <img src="{{ doctor.user.profile_picture.url }}" alt="Profile Picture">
+    <h3>{{ doctor.user.get_full_name }}</h3>
+    <a href="{% url 'appointments:book_appointment' doctor.id %}">Book Appointment</a>
+  </div>
+{% endfor %}

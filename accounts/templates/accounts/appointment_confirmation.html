@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3 class="mt-4">Appointment Confirmation</h3>
+        <p>Doctor: {{ doctor.user.get_full_name }}</p>
+        <p>Date: {{ date_of_appointment }}</p>
+        <p>Start Time: {{ start_time_of_appointment }}</p>
+        <p>End Time: {{ end_time_of_appointment }}</p>
+        
+        <a href="/accounts/patient/dashboard/" class="btn btn-primary mt-3">Home</a>
+      </div>
+    </div>
+  </div>
+  

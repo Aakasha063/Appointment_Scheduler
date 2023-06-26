@@ -1,15 +1,43 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, AppointmentForm
 from .models import Patient, Doctor
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .utils import create_calendar_event, calculate_end_time
 
+
+def appointment_confirmation(request):
+    return render(request, 'accounts/appointment_confirmation.html')
+
+def book_appointment(request, doctor_id):
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            required_speciality = form.cleaned_data['required_speciality']
+            date_of_appointment = form.cleaned_data['date_of_appointment']
+            start_time_of_appointment = form.cleaned_data['start_time_of_appointment']
+            end_time_of_appointment = calculate_end_time(start_time_of_appointment)
+            create_calendar_event(doctor, date_of_appointment, start_time_of_appointment, end_time_of_appointment, required_speciality)
+
+            return render(request, 'accounts/appointment_confirmation.html', {
+                'doctor': doctor,
+                'required_speciality': required_speciality,
+                'date_of_appointment': date_of_appointment,
+                'start_time_of_appointment': start_time_of_appointment,
+                'end_time_of_appointment': end_time_of_appointment,
+            })
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'accounts/book_appointment.html', {'form': form, 'doctor': doctor, 'doctor_id': doctor_id})
 
 def patient_dashboard(request):
-    # Logic for the patient dashboard
-    return render(request, 'accounts/patient_dashboard.html')
+    doctors = Doctor.objects.select_related('user').all()
+    return render(request, 'accounts/patient_dashboard.html', {'doctors': doctors})
 
 def doctor_dashboard(request):
     # Logic for the doctor dashboard

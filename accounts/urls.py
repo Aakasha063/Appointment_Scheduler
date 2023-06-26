@@ -10,4 +10,6 @@ urlpatterns = [
     path('patient/dashboard/', views.patient_dashboard, name='patient_dashboard'),
     path('doctor/dashboard/', views.doctor_dashboard, name='doctor_dashboard'),
     path('logout/', views.logout_view, name='logout'),
+    path('book-appointment/<int:doctor_id>/', views.book_appointment, name='book_appointment'),
+    path('appointment-confirmation/', views.appointment_confirmation, name='appointment_confirmation'),
 ]
