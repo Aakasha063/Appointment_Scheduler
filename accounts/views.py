@@ -22,7 +22,7 @@ def book_appointment(request, doctor_id):
             start_time_of_appointment = form.cleaned_data['start_time_of_appointment']
             end_time_of_appointment = calculate_end_time(start_time_of_appointment)
             create_calendar_event(doctor, date_of_appointment, start_time_of_appointment, end_time_of_appointment, required_speciality)
-
+            
             return render(request, 'accounts/appointment_confirmation.html', {
                 'doctor': doctor,
                 'required_speciality': required_speciality,

@@ -10,7 +10,7 @@
       background-color: #f8f9fa;
     }
     .container {
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 auto;
       padding-top: 30px;
     }
@@ -26,9 +26,7 @@
     }
     .navbar-btns .btn {
       margin-left: 10px;
-    }
-    h5 {
-      font-weight: bold;
+    
     }
     p {
       margin-bottom: 5px;
@@ -44,7 +42,7 @@
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Patients's Dashboard</a>
+      <a class="navbar-brand" href="/accounts/patient/dashboard/">Patients's Dashboard</a>
       <div class="navbar-btns">
         <a class="btn btn-secondary" aria-current="page" href="/blog/patient">View Blogs</a>
         <a href="/accounts/logout" class="btn btn-secondary">Log Out</a>
@@ -53,9 +51,8 @@
   </nav>
 
   <div class="container">
-    <h5 class="my-3">Here are your details.</h5>
-    <p class="my-3">First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
+    <h3 class="my-3">Welcome {{ user.first_name }}!</h3>
+    <p>Full Name: {{ user.first_name }} {{ user.last_name }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Address: {{ user.address_line1 }}, {{ user.city }}, {{ user.state}}, {{ user.pincode}}</p>
     <div class="profile-picture">
@@ -63,16 +60,25 @@
       <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="100px">
     </div>
 
-    <h1>Doctor List</h1>
-    {% for doctor in doctors %}
-        <div>
-            <img src="{{ doctor.user.profile_picture.url }}" alt="{{ doctor.user.get_full_name }}" width="100">
-            <h3>{{ doctor.user.get_full_name }}</h3>
-            <a href="{% url 'accounts:book_appointment' doctor_id=doctor.id %}">Book Appointment</a>
+    <h3 class="my-3">Let's schedule an Appointment</h3>
+    <h5>Please choose one available doctor</h5>
+    <div class="row">
+      {% for doctor in doctors %}
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <img src="{{ doctor.user.profile_picture.url }}" alt="{{ doctor.user.get_full_name }}" class="card-img-top" width="50px">
+          <div class="card-body">
+            <h5 class="card-title">{{ doctor.user.get_full_name }}</h5>
+            <a class="btn btn-secondary" href="{% url 'accounts:book_appointment' doctor_id=doctor.id %}">Book Appointment</a>
+          </div>
         </div>
-    {% empty %}
+      </div>
+      {% empty %}
+      <div class="col">
         <p>No doctors available.</p>
-    {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

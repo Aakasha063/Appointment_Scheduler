@@ -9,7 +9,6 @@ def calculate_end_time(start_time):
     end_time = end_datetime.strftime('%H:%M:%S')
     return end_time
 
-
 def create_calendar_event(doctor, date, start_time, end_time, required_speciality):
     # Define the required scopes
     SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -29,8 +28,8 @@ def create_calendar_event(doctor, date, start_time, end_time, required_specialit
     # Create the event
     event = {
     "summary": "Appointment with Dr. {}".format(doctor.user.get_full_name()),
-    "location": "doctor.user.address_line1",
-    "description": "required_speciality",
+    "location": {}.format(doctor.user.address_line1()),
+    "description": required_speciality,
     "start": {
         "dateTime": "{}T{}".format(date, start_time),
         "timeZone": "Asia/Kolkata"

@@ -1,14 +1,68 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h3 class="mt-4">Appointment Confirmation</h3>
-        <p>Doctor: {{ doctor.user.get_full_name }}</p>
-        <p>Date: {{ date_of_appointment }}</p>
-        <p>Start Time: {{ start_time_of_appointment }}</p>
-        <p>End Time: {{ end_time_of_appointment }}</p>
-        
-        <a href="/accounts/patient/dashboard/" class="btn btn-primary mt-3">Home</a>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Appointment Confirmation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding-top: 30px;
+    }
+    .navbar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 10px 0;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 20px;
+      color: #007bff;
+    }
+    .navbar-btns .btn {
+      margin-left: 10px;
+    }
+    h3 {
+      margin-top: 20px;
+    }
+    p {
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+    .mt-4 {
+      margin-top: 20px;
+    }
+    .mt-3 {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/accounts/patient/dashboard/">Patients's Dashboard</a>
+      <div class="navbar-btns">
+        <a class="btn btn-secondary" aria-current="page" href="/blog/patient">View Blogs</a>
+        <a href="/accounts/logout" class="btn btn-secondary">Log Out</a>
       </div>
     </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+        <h3 class="mt-4">Appointment Confirmation</h3>
+        <p><strong>Doctor:</strong> {{ doctor.user.get_full_name }}</p>
+        <p><strong>Date:</strong> {{ date_of_appointment }}</p>
+        <p><strong>Start Time:</strong> {{ start_time_of_appointment|date:"g:i A" }}</p>
+        <p><strong>End Time:</strong> {{ end_time_of_appointment}}</p>
+        <p><strong>Required Speciality:</strong> {{ required_speciality}}</p>
+
+    </div>
   </div>
-  
+</body>
+</html>
