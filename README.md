@@ -16,7 +16,7 @@ The Dr. Appointment Scheduling App is a web application designed to streamline t
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/aakasha063/Appointment-Scheduling.git`
+1. Clone the repository: `git clone [https://github.com/aakasha063/Appointment-Scheduling.git`](https://github.com/Aakasha063/Appointment_Scheduler.git)
 2. Install the required dependencies: `pip install -r requirements.txt`
 3. Configure the Google API credentials for calendar integration.
 4. Run the Django development server: `python manage.py runserver`
